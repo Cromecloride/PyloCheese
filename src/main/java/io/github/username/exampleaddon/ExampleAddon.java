@@ -1,6 +1,6 @@
-package io.github.username.myaddon;
+package io.github.username.exampleaddon;
 
-import io.github.pylonmc.pylon.core.addon.PylonAddon;
+import io.github.pylonmc.rebar.addon.RebarAddon;
 import lombok.Getter;
 import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -10,18 +10,21 @@ import java.util.Locale;
 import java.util.Set;
 
 @SuppressWarnings("unused")
-public class MyAddon extends JavaPlugin implements PylonAddon {
+public class ExampleAddon extends JavaPlugin implements RebarAddon {
 
-    // The `instance` field stores the instance of the addon (there's only ever one)
-    @Getter private static MyAddon instance;
+    // Stores the instance of the addon (there's only ever one)
+    @Getter private static ExampleAddon instance;
 
-    // Called when our plugin is enabled
+    // Called when the addon is enabled
     @Override
     public void onEnable() {
         instance = this;
 
-        // Every Pylon addon must call this BEFORE doing anything Pylon-related
-        registerWithPylon();
+        // Every Rebar addon must call this BEFORE doing anything Rebar-related
+        registerWithRebar();
+
+        ExampleAddonItems.initialize();
+        ExampleAddonBlocks.initialize();
     }
 
     @Override

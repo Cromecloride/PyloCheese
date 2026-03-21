@@ -1,6 +1,6 @@
 import net.minecrell.pluginyml.bukkit.BukkitPluginDescription
 
-// Specify what plugins to use
+// Specify what gradle plugins to use
 plugins {
     java
     // IntelliJ plugin
@@ -15,7 +15,7 @@ plugins {
     id("io.freefair.lombok") version "8.13.1"
 }
 
-// Specify the 'group' (eg: io.github.pylonmc.myaddon)
+// Specify the 'group' (eg: io.github.pylonmc.exampleaddon)
 group = project.properties["group"]!!
 
 // Add repositories from which to download dependencies
@@ -31,14 +31,14 @@ repositories {
 }
 
 // Get dependency versions from gradle.properties
-val coreVersion = project.properties["pylon-core.version"] as String
-val baseVersion = project.properties["pylon-base.version"] as String
+val rebarVersion = project.properties["rebar.version"] as String
+val pylonVersion = project.properties["pylon.version"] as String
 
 // Download dependencies
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.8-R0.1-SNAPSHOT")
-    compileOnly("io.github.pylonmc:pylon-core:$coreVersion")
-    compileOnly("io.github.pylonmc:pylon-base:$baseVersion")
+    compileOnly("io.github.pylonmc:rebar:$rebarVersion")
+    compileOnly("io.github.pylonmc:pylon:$pylonVersion")
 }
 
 // Settings for IntelliJ
@@ -65,7 +65,7 @@ bukkit {
     main = project.properties["main-class"] as String
     version = project.version.toString()
     apiVersion = "1.21"
-    depend = listOf("PylonCore", "PylonBase")
+    depend = listOf("Rebar", "Pylon")
     load = BukkitPluginDescription.PluginLoadOrder.STARTUP
 }
 
@@ -75,21 +75,19 @@ tasks.runServer {
         // Remove the plugins folder. This is so any changes to language files etc are propagated.
         val runFolder = project.projectDir.resolve("run")
         val pluginsDir = runFolder.resolve("plugins")
-        if (!System.getProperty("io.github.pylonmc.pylon.disableConfigReset").toBoolean()) {
-            pluginsDir.deleteRecursively()
-        }
+        pluginsDir.deleteRecursively()
     }
 
     // Download pylon core and add it to the plugins folder
     downloadPlugins {
-        github("pylonmc", "pylon-core", coreVersion, "pylon-core-$coreVersion.jar")
+        github("pylonmc", "rebar", rebarVersion, "rebar-$rebarVersion.jar")
     }
 
     // Download pylon base and add it to the plugins folder
     downloadPlugins {
-        github("pylonmc", "pylon-base", baseVersion, "pylon-base-$baseVersion.jar")
+        github("pylonmc", "pylon", pylonVersion, "pylon-$pylonVersion.jar")
     }
 
-    maxHeapSize = "4G"
-    minecraftVersion("1.21.8")
+    maxHeapSize = "2G"
+    minecraftVersion("1.21.11")
 }
