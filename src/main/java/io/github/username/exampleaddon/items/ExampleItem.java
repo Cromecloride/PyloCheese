@@ -6,19 +6,19 @@ import org.bukkit.block.Block;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-import org.jspecify.annotations.NonNull;
+import org.jetbrains.annotations.NotNull;
 
 
 public class ExampleItem extends RebarItem implements RebarInteractor {
 
     // Items need one constructor with takes an ItemStack
-    public ExampleItem(@NonNull ItemStack stack) {
+    public ExampleItem(@NotNull ItemStack stack) {
         super(stack);
     }
 
     // Called every time to player clicks a block
     @Override
-    public void onUsedToClick(@NonNull PlayerInteractEvent event, @NonNull EventPriority priority) {
+    public void onUsedToClick(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         if (!event.getAction().isRightClick()) {
             return;
         }

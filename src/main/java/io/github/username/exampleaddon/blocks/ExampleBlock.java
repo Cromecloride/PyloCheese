@@ -10,7 +10,7 @@ import org.bukkit.block.Block;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.persistence.PersistentDataContainer;
-import org.jspecify.annotations.NonNull;
+import org.jetbrains.annotations.NotNull;
 
 
 public class ExampleBlock extends RebarBlock implements RebarInteractBlock {
@@ -18,17 +18,17 @@ public class ExampleBlock extends RebarBlock implements RebarInteractBlock {
     public final int smokeCount = getSettings().getOrThrow("smoke-count", ConfigAdapter.INTEGER);
 
     // 'Place' constructor - called when the block is placed down
-    public ExampleBlock(@NonNull Block block, @NonNull BlockCreateContext context) {
+    public ExampleBlock(@NotNull Block block, @NotNull BlockCreateContext context) {
         super(block, context);
     }
 
     // 'Load' constructor - called when the block is loaded
-    public ExampleBlock(@NonNull Block block, @NonNull PersistentDataContainer pdc) {
+    public ExampleBlock(@NotNull Block block, @NotNull PersistentDataContainer pdc) {
         super(block, pdc);
     }
 
     @Override
-    public void onInteract(@NonNull PlayerInteractEvent event, @NonNull EventPriority priority) {
+    public void onInteract(@NotNull PlayerInteractEvent event, @NotNull EventPriority priority) {
         new ParticleBuilder(Particle.CAMPFIRE_COSY_SMOKE)
                 .location(getBlock().getLocation().toCenterLocation().add(0, 0.7, 0))
                 .count(smokeCount)
